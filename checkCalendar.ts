@@ -82,7 +82,8 @@ export const checkCalendar = async ({y, m, length}: IMonth): Promise<IDaysInMont
     return addBusyToDays(daysInMonth, busy)
 }
 
-const addBusyToDays = (daysInMonth:IDaysInMonth[], busy: IFreeBusy[]|undefined):IDaysInMonth[] => {
+const addBusyToDays = (daysInMonthInput:IDaysInMonth[], busy: IFreeBusy[]|undefined):IDaysInMonth[] => {
+    const daysInMonth = daysInMonthInput
     const periodsForMeeting: IPeriodsForMeetings[] = [
         {
             start: `08:00`,
