@@ -14,30 +14,6 @@ import Calendar = calendar_v3.Calendar;
 
 const MAIL_ADDRESS = "apifex@gmail.com";
 
-interface IFreeBusy {
-    "start": string,
-    "end": string
-}
-
-export interface IEvent {
-  "summary": string,
-  "description": string,
-  "start": {
-    "dateTime": string
-  },
-  "end": {
-    "dateTime": string
-  }
-}
-
-export interface IMail {
-  to: string,
-  from: string,
-  subject: string,
-  message: string
-
-}
-
 export const freeBusy = async (timeMin: string, timeMax: string ) => {
     try {
     const oAuth2Client = new google.auth.OAuth2(credentials.client_id, credentials.client_secret, credentials.redirect_uris);

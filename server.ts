@@ -3,8 +3,6 @@ import cors from 'cors';
 
 import { checkCalendar } from './checkCalendar';
 import { createEvent, sendMail } from './googleApis'
-import { IMonth } from './checkCalendar';
-import { IEvent, IMail } from './googleApis';
 
 const PORT = process.env.PORT || 5000
 const server = express();

@@ -1,33 +1,11 @@
 import { freeBusy } from './googleApis';
 
-export interface IMonth {
-    m: string,
-    y: string,
-    length: number,
-}
-
-interface IPeriodsForMeetings {
-    start: string,
-    end: string,
-    availble: boolean,
-}
-
-interface IDaysInMonth {
-    id: number,
-    date: string,
-    dayOfWeek: number,
-    availble: boolean,
-    periodsForMeeting: IPeriodsForMeetings[],
-}
-
-
-export const checkCalendar = async ({y, m, length}: IMonth):Promise<IDaysInMonth[]> => {
+export const checkCalendar = async ({y, m, length}: IMonth) => {
     const timeMin = `${y}-${m}-01T00:00:00+00:00`
     const timeMax = `${y}-${m}-${length}T23:59:00+00:00`
     
     const busy = await freeBusy( timeMin, timeMax );
     
-
     const daysInMonth: IDaysInMonth[] = [];
     const periodsForMeeting: IPeriodsForMeetings[] = [
         {
@@ -150,8 +128,10 @@ export const checkCalendar = async ({y, m, length}: IMonth):Promise<IDaysInMonth
             }
         )
     }
+    let finish = false
     if (busy) {
     for(let i = 0; i < busy.length; i++) {
+        if (i === busy.length-1) finish = true;
         let busyStart = busy[i].start
         let busyEnd = busy[i].end
         let dayIdx = Number(busyStart.slice(8,10))-1
@@ -214,7 +194,8 @@ export const checkCalendar = async ({y, m, length}: IMonth):Promise<IDaysInMonth
         }
             
         }
-    }   
-    return daysInMonth
+    } else {finish = true}
+
+    if (finish) return daysInMonth
 }
             
