@@ -1,0 +1,9 @@
+/node_modules
+/.pnp
+/credentials
+.pnp.js
+/build
+/build/credentials
+.env
+.admin.ts
+
