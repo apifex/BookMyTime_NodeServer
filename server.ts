@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 
+import {getAccessToken} from './admin'
 import { checkCalendar } from './checkCalendar';
 import { createEvent, sendMail } from './googleApis'
 
@@ -9,11 +10,18 @@ const server = express();
 
 server.use(express.json())
 server.use(cors())
-    
+
+
 const validateCheckCal = (data: IMonth) => {
   if (!data.length || !data.m || !data.y) return false
   return true
 }
+
+
+server.get('/googlecafe3ef20df486b5.html', (req, res)=> {
+  res.sendFile('./googlecafe3ef20df486b5.html')
+})
+
 
 server.post('/checkcalendar', async (req, res) => {
     try{
