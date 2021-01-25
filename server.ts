@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 
-import {getAccessToken} from './admin'
+// import {getAccessToken} from './admin'
 import { checkCalendar } from './checkCalendar';
 import { createEvent, sendMail } from './googleApis'
 
