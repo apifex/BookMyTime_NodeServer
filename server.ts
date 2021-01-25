@@ -19,7 +19,7 @@ const validateCheckCal = (data: IMonth) => {
 
 
 server.get('/googlecafe3ef20df486b5.html', (req, res)=> {
-  res.sendFile('./googlecafe3ef20df486b5.html')
+  res.sendFile(__dirname + './googlecafe3ef20df486b5.html')
 })
 
 
