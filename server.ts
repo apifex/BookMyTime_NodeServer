@@ -1,7 +1,14 @@
+//TODO 
+//endpoint for Admin, for configuration and connection with googleAPI
+//   server.get('/admin', async (req, res) => {
+//       const res = await getAccessToken
+//   } )
+// import {getAccessToken} from './admin'
+
 import express from 'express';
 import cors from 'cors';
 
-// import {getAccessToken} from './admin'
+
 import { checkCalendar } from './checkCalendar';
 import { createEvent, sendMail } from './googleApis'
 
@@ -16,12 +23,6 @@ const validateCheckCal = (data: IMonth) => {
   if (!data.length || !data.m || !data.y) return false
   return true
 }
-
-
-server.get('/googlecafe3ef20df486b5.html', (req, res)=> {
-  res.sendFile(__dirname + '/googlecafe3ef20df486b5.html')
-})
-
 
 server.post('/checkcalendar', async (req, res) => {
     try{
@@ -73,10 +74,5 @@ server.post('/createevent', async (req, res) =>{
     }
   })
 
-//TODO 
-//endpoint for Admin, for configuration and connection with googleAPI
-//   server.get('/admin', async (req, res) => {
-//       const res = await getAccessToken
-//   } )
 
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`))
