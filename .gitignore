@@ -1,9 +1,5 @@
-/node_modules
-/.pnp
-/credentials
-.pnp.js
-/build
-/build/credentials
+node_modules
+old
 .env
-.admin.ts
-
+dist
+config
