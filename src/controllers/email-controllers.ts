@@ -1,10 +1,10 @@
-import express, {Response, Request, NextFunction} from 'express'
+import { Response, Request, NextFunction } from 'express'
 import { sendEmail } from '../services/gmail'
+import { isValidEmailBody } from '../utils/validators'
 
-export async function mailer (req: Request, res: Response, next: NextFunction) {
-    const { from, to, subject, message } = req.body
-   const response = await sendEmail (from, to, subject, message)
-   console.log('email', response)
-   res.send(response)
-}  
+export async function emailController(req: Request, res: Response, next: NextFunction) {
+    if (!isValidEmailBody(req.body)) return next(new Error('Bad Request'))
+    const response = await sendEmail(req.body)
+    res.status(200).send(response)
+}
 

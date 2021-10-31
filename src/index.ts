@@ -1,15 +1,26 @@
 import express from 'express'
 import cors from 'cors'
-import { config } from 'dotenv'
-import { router } from './routes/router'
+import env from './utils/envLoader'
+import { calendarRouter } from './routes/calendar-router'
+import { emailRouter } from './routes/email-router'
+import { errorsHandler } from './utils/errorHandler'
 
-config()
+//initialise server
 
 const server = express()
-const PORT = process.env.PORT || 3000
+const PORT = env.PORT || 3000
 
 server.use(express.json())
 server.use(cors())
-server.use(router)
+
+
+//configure routes
+server.use(calendarRouter, errorsHandler)
+server.use(emailRouter, errorsHandler)
 
 server.listen(PORT, () => console.log(`server liestening on ${PORT}`))
+
+
+
+
+// spróbować z nest

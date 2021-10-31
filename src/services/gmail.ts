@@ -1,42 +1,26 @@
-import { config } from 'dotenv'
-import {google } from 'googleapis'
+import { google } from 'googleapis'
 import { gAuth } from './gAuth'
+import { createMailBody } from '../utils/emailUtils/createEmailBody'
 
-config()
+import { IEmail } from '../types'
 
-interface IEmail {
-  from: string,
-  to: string,
-  subject: string, 
-  message: string,
+export async function sendEmail({ from, to, subject, eventDetails }: IEmail): Promise<string | Error> {
+  try {
+    const auth = gAuth()
+    const encodedMail = await createMailBody({ from, to, subject, eventDetails });
+    const gmail = google.gmail({ version: 'v1', auth });
+    const sendMailResponse = await gmail.users.messages.send({
+      auth,
+      userId: 'me',
+      requestBody: {
+        raw: encodedMail
+      },
+    })
+    return sendMailResponse.statusText
+  } catch (error) {
+    if (error instanceof Error) return error
+    return new Error('Error on sendEmail function')
+  }
 }
 
-const makeMailBody = ({to, from, subject, message}:IEmail) => {
-    const str = ["Content-Type: text/plain; charset=\"UTF-8\"\n",
-        "MIME-Version: 1.0\n",
-        "Content-Transfer-Encoding: 7bit\n",
-        "to: ", to, "\n",
-        "from: ", from, "\n",
-        "subject: ", subject, "\n\n",
-        message
-    ].join('');
-    return Buffer.from(str).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
-  }
-  
-export const sendEmail = async ( from: string, to: string, subject: string, message: string) => {
-    try {
-      const auth = gAuth()
-      const encodedMail = makeMailBody({to, from, subject, message});
-      const gmail = google.gmail({version: 'v1', auth});
-      const sendMailResponse = await gmail.users.messages.send({
-        auth,
-        userId: 'me',
-        requestBody: {
-          raw: encodedMail
-        },
-      })
-      return sendMailResponse.statusText
-    } catch(error) {
-      console.log("Error on sendMail in googleApi: ", error)
-    }
-  }
+

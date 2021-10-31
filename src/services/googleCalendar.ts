@@ -1,31 +1,57 @@
-import { config } from 'dotenv'
-import {google, calendar_v3} from 'googleapis'
+import env from '../utils/envLoader'
+import { google, calendar_v3 } from 'googleapis'
 import { gAuth } from './gAuth';
 
-config()
+class googleCalendar {
+  calendar: calendar_v3.Calendar
+  EMAIL: string
 
-const { EMAIL } = process.env
+  constructor() {
+    const auth = gAuth()
+    this.calendar = google.calendar({ version: 'v3', auth })
+    this.EMAIL = env.EMAIL
+  }
 
-export async function googleCalendar (startTime: string, 
-  endTime: string, userEmail: string = EMAIL): Promise<calendar_v3.Schema$TimePeriod[] | undefined> {
-    try{
-      const auth = gAuth()
-      const calendar: calendar_v3.Calendar = google.calendar({version: 'v3', auth});
-      const busy = await calendar.freebusy.query({
-          requestBody: {
-            "timeMin": startTime,
-            "timeMax": endTime,
-            "timeZone": "Europe/Paris",
-            "items": [
-              { "id": EMAIL }
-            ],
-          }
-        })
-      if (!busy.data.calendars) throw new Error()
+  async checkBusy(startTime: string, endTime: string, userEmail: string = this.EMAIL): Promise<calendar_v3.Schema$TimePeriod[] | undefined | Error> {
+    try {
+      console.log('second check')
+      const busy = await this.calendar.freebusy.query({
+        requestBody: {
+          "timeMin": startTime,
+          "timeMax": endTime,
+          "timeZone": "Europe/Paris",
+          "items": [
+            { "id": this.EMAIL }
+          ],
+        }
+      })
+      if (!busy.data.calendars) throw new Error("Error on Google calendar request")
       return busy.data.calendars[userEmail].busy
-      //TODO 
-    } catch(error) {
-      return undefined
+    } catch (error) {
+      if (error instanceof Error) return error
     }
-    
+  }
+
+  async addEventToCalendar(startTime: string, endTime: string, summary: string, description: string, attendees: { email: string }[]):
+    Promise<calendar_v3.Schema$Event | Error> {
+    try {
+      const addEvent = await this.calendar.events.insert({
+        calendarId: 'primary',
+        requestBody: {
+          start: { dateTime: startTime },
+          end: { dateTime: endTime },
+          summary: summary,
+          description: description,
+          attendees: attendees
+        }
+      })
+      return addEvent.data
+    } catch (error) {
+      if (error instanceof Error) return error
+      //ASK!
+      return new Error('Error on AddEvent function')
+    }
+  }
 }
+
+export default new googleCalendar

@@ -1,9 +1,8 @@
-import { config } from 'dotenv'
+import env from '../utils/envLoader'
 import { google } from 'googleapis'
 
-config()
+const { GOOGLE_APPLICATION_CREDENTIALS_PATH, EMAIL } = env;
 
-const { GOOGLE_APPLICATION_CREDENTIALS_PATH, EMAIL } = process.env;
 const SCOPES = ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/gmail.send'];
 
 export function gAuth () {
