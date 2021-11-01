@@ -1,26 +1,33 @@
-import express from 'express'
+import express, {Express} from 'express'
 import cors from 'cors'
 import env from './utils/envLoader'
 import { calendarRouter } from './routes/calendar-router'
 import { emailRouter } from './routes/email-router'
-import { errorsHandler } from './utils/errorHandler'
 
-//initialise server
+function initializeServer (server: Express) {
+    server.use(express.json())
+    server.use(cors())
+}
 
-const server = express()
-const PORT = env.PORT || 3000
+function configureRoutes (server: Express) {
+    server.use(calendarRouter)
+    server.use(emailRouter)
+}
 
-server.use(express.json())
-server.use(cors())
+function startServer () {
+    const server = express()
+    const PORT = env.PORT || 3000
+    initializeServer(server)
+    configureRoutes(server)
+    server.listen(PORT, () => console.log(`server liestening on ${PORT}`))
+}
+
+startServer()
 
 
-//configure routes
-server.use(calendarRouter, errorsHandler)
-server.use(emailRouter, errorsHandler)
-
-server.listen(PORT, () => console.log(`server liestening on ${PORT}`))
 
 
+// wyciagnac calendar router i  email router z rotes
 
 
 // spróbować z nest

@@ -31,3 +31,5 @@ export const isValidEvent = (startTime: string, endTime: string, summary?: strin
     const isArrayWithMails = attendees ? attendees.reduce<boolean>((acc: boolean, curent: { 'email': string }) => ((acc == true) && emailRegex.test(curent.email)), true) : true
     return !!startTime && !!endTime && isStartTimeString && isEndTimeString && isDescriptionString && isSummaryString && isArrayWithMails
  }
+
+ // uzyc biblioteki 

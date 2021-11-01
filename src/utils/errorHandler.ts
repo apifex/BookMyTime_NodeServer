@@ -1,23 +1,11 @@
-import {NextFunction, Request, Response} from 'express';
+import { Request, Response} from 'express';
 
-export const errorsHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-    let statusCode = 400
-    switch (err.message) {
-        case 'Bad Request': 
-            statusCode = 400
-            break
-        default:
-            statusCode = 500  
+export async function errorHandler(res: Response, req: Request, promise: any) {
+    try {
+        await promise()
     }
-    return res.status(statusCode).send(err.message)
+    catch (err) {
+        if (err instanceof Error) res.status(400).send({error: err.message, requestBody: req.body, requestMethod: req.method, requestHeaders: req.headers})
+    }
 }
-
-
-// export function asyncWrapper (callback: (req: Request, res: Response, next: NextFunction) => Promise<unknown>) {
-//     console.log('wrapper')
-//     return function (req: Request, res: Response, next: NextFunction) {
-//         callback(req, res, next).catch(next)
-//     }
-// }
-
 
