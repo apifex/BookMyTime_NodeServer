@@ -15,10 +15,12 @@ export const isValidEmailBody = (body: IEmail) => {
     return isFromEmail && isToEmail && isSubjectString && isStartTimeString && isEndTimeString && isGuestNameString && isSummaryString && isLocationString
 }
 
-export const isValidDate = (year: string, month: string): boolean => {
+export const isValidDate = (year: unknown, month: unknown): boolean => {
+    const isString = typeof year === 'string' && typeof month === 'string'
+    if (!isString) return false
     const numeric = /[0-9]/
     return !!year && !!month && numeric.test(year) && numeric.test(month) &&
-       Number(month) >= 1 && Number(month) <= 12 && Number(year) > 2010
+       Number(month) >= 0 && Number(month) <= 11 && Number(year) > 2010
  }
  
 export const isValidEvent = (startTime: string, endTime: string, summary?: string, description?: string, attendees?: { 'email': string }[]) => {

@@ -35,11 +35,11 @@ export function createMonthObject(year: string, month: string, monthLength: numb
                     end: `11:55`,
                     availble,
                 },
-                {
-                    start: `12:00`,
-                    end: `12:55`,
-                    availble,
-                },
+                // {
+                //     start: `12:00`,
+                //     end: `12:55`,
+                //     availble,
+                // },
                 {
                     start: `13:00`,
                     end: `13:55`,

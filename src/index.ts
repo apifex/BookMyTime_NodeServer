@@ -16,18 +16,13 @@ function configureRoutes (server: Express) {
 
 function startServer () {
     const server = express()
-    const PORT = env.PORT || 3000
+    const PORT = env.PORT || 4000
     initializeServer(server)
     configureRoutes(server)
     server.listen(PORT, () => console.log(`server liestening on ${PORT}`))
 }
 
 startServer()
-
-
-
-
-// wyciagnac calendar router i  email router z rotes
 
 
 // spróbować z nest

@@ -1,14 +1,25 @@
 import mjml2html from 'mjml'
 import dayjs from 'dayjs'
+import updateLocal from 'dayjs/plugin/updateLocale'
 import MailComposer from 'nodemailer/lib/mail-composer'
 import { createICS } from './createCalendarICS'
+dayjs.extend(updateLocal)
+dayjs.updateLocale('en', {
+    months: [
+        "January", "February", "March", "April", "May", "June", "July",
+        "August", "September", "October", "November", "December"
+    ],
+    weekdays: [
+        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+      ]
+})
 
 import { IEmail } from '../../types'
 
 export async function createMailBody({ to, from, subject, eventDetails }: IEmail): Promise<string> {
   const calendarICS = createICS(eventDetails)
   const eventDate = dayjs(eventDetails.start)
-  const displayDate = eventDate.format('DD/MM/YYYY')
+  const displayDate = eventDate.format('DD MMMM YYYY')
   const displayTime = eventDate.format('HH:mm')
   const htmlContent = mjml2html(`
       <mjml>

@@ -1,3 +1,6 @@
+import { Request, Response } from 'express'
+import { Query, Params } from 'express-serve-static-core'
+
 export interface IMonthObject {
     id: number,
     date: string,
@@ -24,6 +27,11 @@ export interface IEmail {
     },
 }
 
+export interface TypedRequest<T extends Query, U> extends Request {
+    query: T,
+    body: U
+}
+
 declare global {
     namespace NodeJS {
         interface ProcessEnv {
@@ -33,5 +41,7 @@ declare global {
         }
     }
 }
+
+
 
 export { }

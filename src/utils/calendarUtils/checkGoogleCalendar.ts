@@ -7,17 +7,16 @@ export async function checkGoogleCalendar(year: string, month: string) {
     const monthLength = dayjs(`${year}-${month}-01`).daysInMonth()
     const today = dayjs()
     const todayStr = today.format()
-    const isSameMonth = today.month() == Number(month)
-
+    const isSameMonth = today.month() + 1 === Number(month) 
     const startDateString = isSameMonth ? todayStr : dayjs(`${year}-${month}-01`).format()
     const endDateString = startDateString.substr(0, 8) + String(monthLength) + startDateString.substr(10, startDateString.length)
-
-    const busy = await googleCalendarActions.checkBusy(startDateString, endDateString)
-
+    
+    const busy = dayjs(endDateString).isAfter(today)?await googleCalendarActions.checkBusy(startDateString, endDateString):undefined
+    
     const monthObject = createMonthObject(year, month, monthLength, today)
 
     if (busy) {
-        busy.push({ start: todayStr.substr(0, 11) + '01' + todayStr.substr(13, todayStr.length), end: todayStr })
+        if (isSameMonth) busy.push({ start: todayStr.substr(0, 11) + '01' + todayStr.substr(13, todayStr.length), end: todayStr })
         busy.forEach(el => {
             if (!el.start || !el.end) return
             const dayIndex = Number(el.start.substr(8, 2)) - 1
