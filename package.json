@@ -7,7 +7,6 @@
     "build": "rimraf dist && tsc",
     "preserve": "npm run build",
     "serve": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon -q dist/index.js\"",
-    "prestart": "npm run build",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "cross-env NODE_ENV=development concurrently tsc --watch"
@@ -46,8 +45,6 @@
     "googleapis": "^85.0.0",
     "mjml": "^4.10.4",
     "nodemailer": "^6.7.0",
-    "reflect-metadata": "^0.1.13",
-    "rimraf": "^3.0.2",
-    "sqlite3": "^5.0.2"
+    "rimraf": "^3.0.2"
   }
 }

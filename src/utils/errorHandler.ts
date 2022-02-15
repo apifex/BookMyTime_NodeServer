@@ -1,4 +1,4 @@
-import { Response, Request, NextFunction } from 'express'
+import { Response, Request } from 'express'
 
 export function errorHandler(target: Object, key: string, descriptor: PropertyDescriptor) {
     const originalFn = descriptor.value
@@ -11,3 +11,4 @@ export function errorHandler(target: Object, key: string, descriptor: PropertyDe
       }
     }
   }
+
