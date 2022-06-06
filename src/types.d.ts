@@ -35,7 +35,6 @@ export interface TypedRequest<T extends Query, U> extends Request {
 declare global {
     namespace NodeJS {
         interface ProcessEnv {
-            GOOGLE_APPLICATION_CREDENTIALS_PATH: string,
             EMAIL: string,
             PORT: Number,
             GEMAIL: string,
