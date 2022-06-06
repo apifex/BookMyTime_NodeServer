@@ -1,4 +1,4 @@
-import express, { Express } from 'express'
+import express, { Express, response } from 'express'
 import cors from 'cors'
 import env from './utils/envLoader'
 import { calendarRouter } from './routes/calendar-router'
@@ -10,6 +10,8 @@ function initializeServer(server: Express) {
 }
 
 function configureRoutes(server: Express) {
+
+    server.get('test', (req, res) => res.send('hello darling'))
     server.use('/api', calendarRouter)
     server.use('/api', emailRouter)
 }
