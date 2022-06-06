@@ -19,7 +19,7 @@ function startServer() {
     const PORT = env.PORT || 3000
     initializeServer(server)
     configureRoutes(server)
-    server.listen(PORT, () => console.log(`server liestening on ${PORT}`))
+    server.listen(PORT, () => console.log(`server listening on ${PORT}`))
 }
 
 startServer()

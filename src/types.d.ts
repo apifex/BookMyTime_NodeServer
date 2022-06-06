@@ -37,7 +37,10 @@ declare global {
         interface ProcessEnv {
             GOOGLE_APPLICATION_CREDENTIALS_PATH: string,
             EMAIL: string,
-            PORT: Number
+            PORT: Number,
+            GEMAIL: string,
+            KEYID: string,
+            KEY: string
         }
     }
 }
