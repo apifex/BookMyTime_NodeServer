@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Calendar widget",
   "main": "index.js",
+  "engines": {
+    "node": "16.15.x"
+  },
   "scripts": {
     "build": "rimraf dist && tsc",
     "preserve": "npm run build",
