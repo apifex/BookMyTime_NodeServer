@@ -7,8 +7,8 @@ const SCOPES = ['https://www.googleapis.com/auth/calendar', 'https://www.googlea
 
 export function gAuth () {
     const auth = new google.auth.JWT({
-        keyId: KEYID.replace(/\\n/gm, '\n'),
-        key: KEY,
+        keyId: KEYID,
+        key: KEY.replace(/\\n/gm, '\n'),
         email: GEMAIL,
         scopes: SCOPES,
         subject: EMAIL
