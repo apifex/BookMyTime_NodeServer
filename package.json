@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf dist && tsc",
-    
     "preserve": "npm run build",
     "serve": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon -q dist/index.js\"",
     "start": "node dist/index.js",
