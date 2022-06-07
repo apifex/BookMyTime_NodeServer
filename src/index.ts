@@ -11,7 +11,7 @@ function initializeServer(server: Express) {
 
 function configureRoutes(server: Express) {
 
-    server.get('/test', (req, res) => res.send('hello darling' + env.KEYID))
+    server.get('/test', (req, res) => res.send('hello darling2' + env.KEY))
     server.use('/api', calendarRouter)
     server.use('/api', emailRouter)
 }
